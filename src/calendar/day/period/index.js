@@ -123,9 +123,6 @@ class Day extends Component {
     let fillerStyle = {};
     let fillers;
     let dots;
-    let dotStyle = [
-      { width: 4, height: 4, marginTop: 1, borderRadius: 2, opacity: 0 }
-    ];
 
     if (this.props.state === "disabled") {
       textStyle.push(this.style.disabledText);
@@ -141,7 +138,7 @@ class Day extends Component {
 
       if (this.props.marking.dots) {
         let marking = this.props.marking;
-        dotStyle.push({ opacity: 1 });
+        const baseDotStyle = [this.style.dot, this.style.visibleDot];
 
         const validDots = marking.dots.filter(d => d && d.color);
         dots = validDots.map((dot, index) => {
@@ -149,7 +146,7 @@ class Day extends Component {
             <View
               key={dot.key ? dot.key : index}
               style={[
-                dotStyle,
+                baseDotStyle,
                 {
                   backgroundColor:
                     marking.selected && dot.selectedDotColor
