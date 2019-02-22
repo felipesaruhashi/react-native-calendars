@@ -16,8 +16,7 @@ class Day extends Component {
     theme: PropTypes.object,
     marking: PropTypes.any,
 
-    dot: PropTypes.bool,
-    dotColor: PropTypes.string,
+    dots: PropTypes.array,
 
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
@@ -123,7 +122,7 @@ class Day extends Component {
     let rightFillerStyle = {};
     let fillerStyle = {};
     let fillers;
-    let dot;
+    let dots;
     let dotStyle = [
       { width: 4, height: 4, marginTop: 1, borderRadius: 2, opacity: 0 }
     ];
@@ -140,12 +139,27 @@ class Day extends Component {
         borderRadius: 17
       });
 
-      if (this.props.marking.dot) {
-        dotStyle.push({
-          opacity: 1,
-          backgroundColor: this.props.marking.dotColor || "#00ffbb"
+      if (this.props.marking.dots) {
+        let marking = this.props.marking;
+        dotStyle.push({ opacity: 1 });
+
+        const validDots = marking.dots.filter(d => d && d.color);
+        dots = validDots.map((dot, index) => {
+          return (
+            <View
+              key={dot.key ? dot.key : index}
+              style={[
+                dotStyle,
+                {
+                  backgroundColor:
+                    marking.selected && dot.selectedDotColor
+                      ? dot.selectedDotColor
+                      : dot.color
+                }
+              ]}
+            />
+          );
         });
-        dot = <View style={dotStyle} />;
       }
 
       const flags = this.markingStyle;
@@ -218,7 +232,7 @@ class Day extends Component {
             <Text allowFontScaling={false} style={textStyle}>
               {String(this.props.children)}
             </Text>
-            {dot}
+            <View style={{ flexDirection: "row" }}>{dots}</View>
           </View>
         </View>
       </TouchableWithoutFeedback>
