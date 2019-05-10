@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { TouchableWithoutFeedback, Text, View } from "react-native";
-import { shouldUpdate } from "../../../component-updater";
-import isEqual from "lodash.isequal";
+import PropTypes from 'prop-types';
+import {
+  TouchableWithoutFeedback,
+  Text,
+  View} from 'react-native';
+import {shouldUpdate} from '../../../component-updater';
+import isEqual from 'lodash.isequal';
 
 import * as defaultStyle from "../../../style";
 import styleConstructor from "./style";
@@ -231,6 +234,7 @@ class Day extends Component {
 
     return (
       <TouchableWithoutFeedback
+        testID={this.props.testID}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}
       >
